@@ -7,7 +7,7 @@ import java.nio.file.attribute.*;
 
 import javax.imageio.ImageIO;
 
-import exceptions.AttributeNotFoundException;
+import exceptions.SortingFeatureNotFoundException;
 
 public interface FromFileCreator {
 	
@@ -17,7 +17,7 @@ public interface FromFileCreator {
 		try {
 			creationTime = Files.readAttributes(Paths.get(file.getAbsolutePath()), BasicFileAttributes.class).creationTime();
 		} catch (IOException e) {
-			throw new AttributeNotFoundException("File " + file.getName() + " can not be sorted!");
+			throw new SortingFeatureNotFoundException("File " + file.getName() + " can not be sorted!");
 		}
 		
 		return creationTime;
@@ -29,7 +29,7 @@ public interface FromFileCreator {
 		try {
 			image = ImageIO.read(file);
 		} catch (IOException e) {
-			throw new AttributeNotFoundException("File " + file.getName() + " can not be sorted!");
+			throw new SortingFeatureNotFoundException("File " + file.getName() + " can not be sorted!");
 		}
 		
 		return image;

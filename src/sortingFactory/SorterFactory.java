@@ -1,12 +1,12 @@
 package sortingFactory;
 
-import exceptions.AttributeNotFoundException;
+import exceptions.SortingFeatureNotFoundException;
 
 public class SorterFactory {
 	
 	public static Sorter getSorter(String feature) {
 		if(feature == null)
-			throw new AttributeNotFoundException("No feature to sort");
+			throw new SortingFeatureNotFoundException("No feature to sort");
 		
 		if(feature.equalsIgnoreCase("color"))
 			return new ColorSorter();

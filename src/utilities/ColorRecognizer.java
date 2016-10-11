@@ -4,7 +4,7 @@ import java.awt.image.BufferedImage;
 import java.util.*;
 
 import enums.Colors;
-import exceptions.AttributeNotFoundException;
+import exceptions.SortingFeatureNotFoundException;
 
 public class ColorRecognizer {
 	
@@ -48,7 +48,7 @@ public class ColorRecognizer {
 
 	private static void toHSV() {
 		
-		if(valuesRGB.isEmpty()) throw new AttributeNotFoundException("File " + fileName + " can not be sorted with a color!");
+		if(valuesRGB.isEmpty()) throw new SortingFeatureNotFoundException("File " + fileName + " can not be sorted with a color!");
 		
 		ArrayList<Double> copyList = new ArrayList<>(valuesRGB);
 		Collections.sort(copyList);
@@ -71,7 +71,7 @@ public class ColorRecognizer {
 	}
 	
 	private static String toColorName() {
-		if(valuesHSV.isEmpty()) throw new AttributeNotFoundException("File " + fileName + " can not be sorted with a color!");
+		if(valuesHSV.isEmpty()) throw new SortingFeatureNotFoundException("File " + fileName + " can not be sorted with a color!");
 		
 		String colorName;
 		

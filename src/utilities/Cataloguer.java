@@ -43,25 +43,19 @@ public class Cataloguer {
 	}
 	
 	private static void copyFiles(String path, File source) throws IOException {
-		InputStream is = null;
-		OutputStream os = null;
 		
 		File dest = new File(createDirectoryName(path,source.getName()));
 		
-		try
+		try (InputStream is = new BufferedInputStream(new FileInputStream(source)); 
+				OutputStream os = new BufferedOutputStream(new FileOutputStream(dest)))
 		{
-			is = new FileInputStream(source);
-			os = new FileOutputStream(dest);
 			
 			byte[] buffer = new byte[1024];
 			int length;
 			while((length = is.read(buffer)) > 0) {
 				os.write(buffer, 0, length);
+				os.flush();
 			}
-		}
-		finally {
-			is.close();
-			os.close();
 		}
 	}
 

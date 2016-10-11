@@ -4,7 +4,7 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
 import controllers.Controller;
-import exceptions.AttributeNotFoundException;
+import exceptions.SortingFeatureNotFoundException;
 import utilities.FromFileCreator;
 
 import javax.swing.GroupLayout.Alignment;
@@ -27,7 +27,7 @@ public class AppWindow extends JFrame {
 	private JButton checkedSortButton;
 	private JFileChooser filechooser = new JFileChooser();
 	private JPanel panel = new JPanel();
-	private Task task;
+	private Thread task;
 
 	/**
 	 * Launch the application.
@@ -253,7 +253,7 @@ public class AppWindow extends JFrame {
 		
 			if(imagesToSort != null) {
 				sourceName.setText(sourceDir.getAbsolutePath());
-				task = new Task();
+				task = new Thread(new Task());
 				task.start();
 			}
 			else {
@@ -287,7 +287,6 @@ public class AppWindow extends JFrame {
 	}
 	
 	private void checkIfSortEnable() {
-		System.out.println("Checking button");
 		if(!sourceName.getText().trim().equals("") && !destName.getText().trim().equals("") && sortingFeature != null)
 			checkedSortButton.setEnabled(true);
 		else
@@ -309,7 +308,7 @@ public class AppWindow extends JFrame {
                    "Files can not be copied!", 
                     "Sorting failed", JOptionPane.WARNING_MESSAGE);
 		}
-		catch (AttributeNotFoundException e){
+		catch (SortingFeatureNotFoundException e){
 			JOptionPane.showMessageDialog(null,
                     e.getMessage(), 
                     "Sorting failed", JOptionPane.WARNING_MESSAGE);
@@ -372,13 +371,13 @@ public class AppWindow extends JFrame {
 		
 	}
 	
-	private class Task extends Thread {
+	private class Task implements Runnable {
 
 		@Override
 		public void run() {
 			
 			for(File image: imagesToSort) {
-				if(!this.isInterrupted())
+				if(!task.isInterrupted())
 					fillPanelWithIcons(image);
 				else
 					break;
